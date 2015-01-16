@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MarketHack</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <center>
+    <a href="/"><span style="font-size: 50pt; text-shadow: 2px 2px grey">MarketHack</span></a>
+    <span style="font-size: 10pt; color: red"><br />Learn the Market. Hack the Market.</span>
+  </center>
+</head>
+<body>
+
+<div align="right" class="navbar-text pull-right">
+<% if user_signed_in? %>
+  Logged in as <b><%= current_user.email %></b>.
+  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+  <%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => 'navbar-link' %>
+<% else %>
+  <%= link_to 'Sign up', new_user_registration_path, :class => 'navbar-link' %>
+  <%= link_to 'Login', new_user_session_path, :class => 'navbar-link' %>
+<% end %>
+</div><br />
+
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+<%= yield %>
+
+</body>
+<footer>
+  <center><span style="font-size: 10pt">© 2015 MarketHack</span></center>
+</footer>
+</html>

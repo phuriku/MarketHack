@@ -1,0 +1,48 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: Avenir;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #D8D8D8;
+}
+
+.display_table {
+  height: 200px;
+  width: 30%;
+  background-color: #1C1C1C;
+  font-size: 12pt;
+  padding: 10px;
+  margin: 10px;
+  float: left;
+  display: inline-block;
+  border: 1px solid white;
+
+}
+
+.table-head {
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  font-size: 15pt;
+  margin: 10px 0px;
+  font-weight: bold;
+}
+
+.green {
+  color: #40FF00;
+}
+
+.red {
+  color: red;
+}
