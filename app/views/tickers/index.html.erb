@@ -2,14 +2,41 @@
   <script src="jquery-1.11.1.min.js"></script>
 </head>
 
-<div style="text-align: right"><%= form_for search_path, method: :get do |f| %>
-
+<div style="text-align: right; display:inline-block; float:right">
+  <%= form_for search_path, method: :get do |f| %>
     <%= f.label "Stock Search:", :class => 'search_label' %>
     <%= text_field_tag :q, params[:q], :class => 'search_field' %>
     <%= button_tag "Search", name: nil, :class => 'search_button' %>
-  </ul>
+  <% end %>
+</div>
 
-  <% end %></div>
+<% if params[:q] and params[:q] != "" %>
+  <br />
+  <center><h2>Search Results for "<%= params[:q] %>"</h2>
+  <% if @tickers %>
+    <% @tickers.each do |ticker| %>
+      <br />
+      <%= link_to "#{ticker.symbol} (#{ticker.name})", ticker_path(ticker)%>
+      <br />
+    <% end %>
+  <% end %>
+  </center><br />
+
+<% else %>
+<div style="display:inline-block; margin: 10px 0 0 10px; text-align: left; width: 300px; height: 55px; border: 1px solid white; padding: 5px;">
+  <table style="font-weight: bold">
+    <col width="150">
+    <col width="200">
+    <tr>
+      <td style="text-align: center">NASDAQ</td>
+      <td class=<% if $nasdaq_data[2].split(" - ")[1].to_f >= 0 %> "green" <% end %>><%= number_with_delimiter($nasdaq_data[0].to_f.round(1),  :precision => 1, :delimiter => ',') %> (<% if $nasdaq_data[2].split(" - ")[1].to_f >= 0 %>↑<% end %><%= $nasdaq_data[2].split(" - ")[1].to_f.round(1) %>%)</td>
+    <tr>
+    <tr>
+      <td style="text-align: center">S&P 500</td>
+      <td class=<% if $sp_data[2].split(" - ")[1].to_f >= 0 %> "green" <% end %>><%= number_with_delimiter($sp_data[0].to_f.round(1),  :precision => 1, :delimiter => ',') %> (<% if $sp_data[2].split(" - ")[1].to_f >= 0 %>↑<% end %><%= $sp_data[2].split(" - ")[1].to_f.round(1) %>%)</td>
+    <tr>
+  </table>
+</div>
 
 <center><h1>Stocks by Movement</h1></center>
 <div class="display_table">
@@ -28,7 +55,7 @@
       <tr>
         <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
         <td style="text-align: right"><%= ticker.price %> </td>
-        <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
+        <td><span class=<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>>(<%= ticker.daily_change %>%)</span></td>
         <td style="text-align: center"><%= ticker.volume %>M <font size="1px">(avg. <%= ticker.volume_avg %>M)</font></td>
       </tr>
       <% end %>
@@ -77,7 +104,7 @@
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
       <td style="text-align: right"><%= ticker.price %></td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.pe %></td>
+      <td style="text-align: center"><% if ticker.pe %><%= ticker.pe %><% else %>--<% end %></td>
       <td style="text-align: center"><%= ticker.peb %></td>
     </tr>
     <% end %>
@@ -156,7 +183,7 @@
       <td style="text-align: right"><%= ticker.price %></td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
       <td style="text-align: center"><%= ticker.market_cap %></td>
-      <td style="text-align: center"><%= ticker.pe %></td>
+      <td style="text-align: center"><% if ticker.pe %><%= ticker.pe %><% else %>--<% end %></td>
     </tr>
     <% end %>
   </table>
@@ -164,7 +191,7 @@
 
 <center><h1 style="clear: both"><br />Stocks by Sector</h1></center>
 <div class="display_table">
-  <div class="table-head">Tech (Winners)</div>
+  <div class="table-head">Tech (Strong Performers)</div>
   <table>
     <col width="120">
     <col width="60">
@@ -186,7 +213,7 @@
   </table>
 </div>
 <div class="display_table">
-  <div class="table-head">Finance (Winners)</div>
+  <div class="table-head">Finance (Strong Performers)</div>
   <table>
     <col width="120">
     <col width="60">
@@ -208,7 +235,7 @@
   </table>
 </div>
 <div class="display_table">
-  <div class="table-head">Energy (Winners)</div>
+  <div class="table-head">Energy (Strong Performers)</div>
   <table>
     <col width="120">
     <col width="60">
@@ -231,7 +258,7 @@
 </div>
 <br />
 <div class="display_table">
-  <div class="table-head">Tech (Losers)</div>
+  <div class="table-head">Tech (Weak Performers)</div>
   <table>
     <col width="120">
     <col width="60">
@@ -253,7 +280,7 @@
   </table>
 </div>
 <div class="display_table">
-  <div class="table-head">Finance (Losers)</div>
+  <div class="table-head">Finance (Weak Performers)</div>
   <table>
     <col width="120">
     <col width="60">
@@ -275,7 +302,7 @@
   </table>
 </div>
 <div class="display_table">
-  <div class="table-head">Energy (Losers)</div>
+  <div class="table-head">Energy (Weak Performers)</div>
   <table>
     <col width="120">
     <col width="60">
@@ -297,3 +324,4 @@
   </table>
 </div>
 <br />
+<% end %>

@@ -70,18 +70,17 @@ $(document).ready(function () {
 
   <center><h1>Comments (<%= Comment.where(ticker_id: @ticker.id).count %>)</h1></center><br />
 
-  <!--<center><u><%=link_to "Write a New Comment", new_ticker_comment_path(ticker_id: params[:id])%></u></center>-->
-
   <% if @comments %>
+    <%= paginate @comments %>
     <% @comments.each do |comment| %>
       <center>
-        <div class="comment" style="background-color: #2E2E2E; border: 1px solid white; text-align: left; min-height: 40px; width: 400px; border-radius: 5px; margin: 20px">
-          <div style="min-height: 20px; width: 100%; padding: 20px 20px 10px 20px">
+        <div class="comment" style="background-color: #2E2E2E; border: 1px solid white; text-align: left; min-height: 40px; width: 400px; border-radius: 5px; margin: 20px 20px 20px 15px">
+          <div style="min-height: 20px; width: 100%; padding: 20px 20px 10px 5px">
             <%= comment.description %><br />
           </div>
           <hr />
           <div style="text-align: right; padding: 10px 20px 20px 20px">
-            <span style="font-size: 10px">Submitted by:</span> <%= User.find(comment.user_id).email %><br />
+            <% if current_user == User.find(comment.user_id) %><span style="font-size: 15px"> Edit | Delete | </span><% end %> <span style="font-size: 10px">Submitted by:</span> <%= User.find(comment.user_id).email %><br />
             <span style="font-size: 10px">Created on:</span> <%= (comment.created_at.to_s)[0..10] %> <span style="font-size: 10px">at</span> <%= (comment.created_at.to_s)[11..15] %> <span style="font-size: 10px">with Stock Price at</span> <%= comment.stock_price %> <span class=<% if comment.stock_price/@ticker.price >= 1 %> "green" <% else %> "red" <% end %> >(<%= ((1-comment.stock_price/@ticker.price)*100).round %>%)</span>
           </div>
         </div>

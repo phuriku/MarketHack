@@ -432,3 +432,19 @@ tickers.each do |ticker|
     ticker_buffer.update(name: ticker[:name], sector: ticker[:sector], price: ticker[:price], daily_change: ticker[:daily_change], daily_change_abs: ticker[:daily_change_abs], market_cap: ticker[:market_cap], market_cap_num: ticker[:market_cap_num], pe: ticker[:pe], peb: ticker[:peb], volume: ticker[:volume], volume_avg: ticker[:volume_avg], volume_cmp: ticker[:volume_cmp], pe_peb_avg: ticker[:pe_peb_avg], mov_avg_50: ticker[:mov_avg_50], mov_avg_50_cmp: ticker[:mov_avg_50_cmp], mov_avg_200: ticker[:mov_avg_200], beta: ticker[:beta], daily_annual_change_avg: ticker[:daily_annual_change_avg], low_52: ticker[:low_52], high_52: ticker[:high_52])
   end
 end
+
+#nasdaq_data = open("http://download.finance.yahoo.com/d/quotes.csv?s=%5E;IXIC&f=l1,c").read
+#if !Ticker.exists?(symbol: '^IXIC')
+  #Ticker.create(symbol: '^IXIC', name: 'NASDAQ')
+#else
+  #nasdaq = Ticker.find_by(symbol: '^IXIC')
+  #nasdaq.update(name: 'NAME', price: nasdaq_data[0], daily_change: nasdaq_data[2].split(" - ")[1].to_f.round(1))
+#end
+
+#sp_data = open("http://download.finance.yahoo.com/d/quotes.csv?s=%5E;GSPC&f=l1,c").read
+#if !Ticker.exists?(symbol: '^GSPC')
+  #Ticker.create(symbol: '^GSPC', name: 'S&P 500')
+#else
+  #sp = Ticker.find_by(symbol: '^GSPC')
+  #sp.update(name: 'NAME', price: sp_data[0], daily_change: sp_data[2].split(" - ")[1].to_f.round(1))
+#end
