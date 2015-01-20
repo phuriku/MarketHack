@@ -4,7 +4,7 @@
   <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
 </head>
 
-<h4><%= link_to 'Back to Home Page', tickers_path %></h4>
+<%= link_to 'Back to Home Page', root_path %>
 
 <center><h1><%= @ticker.symbol %> (<%= @ticker.name %>)</h1></center>
 
@@ -13,14 +13,14 @@
   <hr />
   <center>Market Cap: $<span style="font-size: 30pt"><%= @ticker.market_cap %></span><span style="font-size: 15pt"><% if @ticker.market_cap_num > 50000000000 %> (Large Cap) <% elsif @ticker.market_cap_num > 5000000000 %> (Mid Cap) <% else %> (Small Cap) <% end %></span>
   <hr />
-  <center>P/E: <span style="font-size: 30pt"><%= @ticker.pe %><% if @ticker.pe.nil? %>--<% end %></span></center>
+  <center><%= link_to "P/E", term_path(Term.find_by(name: "P/E")) %>: <span style="font-size: 30pt"><%= @ticker.pe %><% if @ticker.pe.nil? %>--<% end %></span></center>
     <span class=<% if @ticker.pe.nil? %> <%= "red" %> <% elsif @ticker.pe <= 12 %> <%= "green" %> <% elsif @ticker.pe != nil and @ticker.pe >= 50 %> <%= "red" %> <% else %> <%= "" %> <% end %>>
       <% if @ticker.pe.nil? %> (This company is not profitable. Investment requires confidence that this company can get out of the red.)
       <% elsif @ticker.pe <= 12 and @ticker.sector != 'Finance' or @ticker.pe <= 10 %> (This stock has a low P/E, meaning that the market expects little future growth for this company. For stable, well-run companies capable of sustained future growth, a low P/E may imply undervaluation.)
       <% elsif @ticker.pe >= 30 %> (A high P/E means the market expects rapid profit expansion. If the company doesn't meet these expectations, shares could fall sharply. )<% end %>
     </span>
   <hr />
-  <center>P/B: <span style="font-size: 30pt"><%= @ticker.peb %></span></center>
+  <center><%= link_to "P/B", term_path(Term.find_by(name: "P/B")) %>: <span style="font-size: 30pt"><%= @ticker.peb %></span></center>
     <span class=<% if @ticker.peb <= 1 %> <%= "green" %> <% elsif @ticker.peb >= 10 %> <%= "red" %> <% else %> <%= "" %> <% end %>>
       <% if @ticker.peb <= 1 and @ticker.sector != 'Finance' or @ticker.peb <= 0.8 %> (This stock is selling below book value, meaning that its cash and physical assets (minus debt) are worth more than the stock.) <% end %>
     </span>
@@ -95,7 +95,7 @@ $(document).ready(function () {
       <% end %>
     </div>
 
-    <center><h3><%= "Add a comment for #{@ticker.name}"  %></h3></center>
+    <center><h3><%= "Add a comment about #{@ticker.name}"  %></h3></center>
 
     <%= form_for [@ticker, @comment] do |f| %>
 

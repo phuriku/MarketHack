@@ -394,6 +394,24 @@ pages = [
   }
 ]
 
+terms = [
+  {
+    name: 'P/E'
+  },
+  {
+    name: 'P/B'
+  },
+  {
+    name: 'Volume'
+  },
+  {
+    name: 'Market Cap'
+  },
+  {
+    name: '50-Day Moving Average'
+  }
+]
+
 tickers.each do |ticker|
   data = open("http://download.finance.yahoo.com/d/quotes.csv?s=" + ticker[:symbol] + "&f=l1,c,j1,r,r5,p6,v,a2,m3,m4,j,k,y").read
   data_array = data.split(",")
@@ -433,18 +451,14 @@ tickers.each do |ticker|
   end
 end
 
-#nasdaq_data = open("http://download.finance.yahoo.com/d/quotes.csv?s=%5E;IXIC&f=l1,c").read
-#if !Ticker.exists?(symbol: '^IXIC')
-  #Ticker.create(symbol: '^IXIC', name: 'NASDAQ')
-#else
-  #nasdaq = Ticker.find_by(symbol: '^IXIC')
-  #nasdaq.update(name: 'NAME', price: nasdaq_data[0], daily_change: nasdaq_data[2].split(" - ")[1].to_f.round(1))
-#end
+pages.each do |page|
+  if !Page.exists?(title: page[:title])
+    Page.create(title: page[:title])
+  end
+end
 
-#sp_data = open("http://download.finance.yahoo.com/d/quotes.csv?s=%5E;GSPC&f=l1,c").read
-#if !Ticker.exists?(symbol: '^GSPC')
-  #Ticker.create(symbol: '^GSPC', name: 'S&P 500')
-#else
-  #sp = Ticker.find_by(symbol: '^GSPC')
-  #sp.update(name: 'NAME', price: sp_data[0], daily_change: sp_data[2].split(" - ")[1].to_f.round(1))
-#end
+terms.each do |term|
+  if !Term.exists?(name: term[:name])
+    Term.create(name: term[:name])
+  end
+end

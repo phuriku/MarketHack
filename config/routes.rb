@@ -3,8 +3,6 @@ Rails.application.routes.draw do
   devise_for :users
   root 'tickers#index'
 
-  #devise_for :users
-
   resources :admin, only: [:index]
 
   namespace :admin do
@@ -12,6 +10,8 @@ Rails.application.routes.draw do
       resources :comments, only: [:index, :show, :destroy]
     end
     resources :users, only: [:index, :show, :destroy]
+    resources :pages
+    resources :terms
   end
 
   resources :tickers do
