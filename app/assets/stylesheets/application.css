@@ -159,7 +159,7 @@ a:visited {
 /* Terms CSS */
 
 #similar-terms {
-  style="min-height: 200px;
+  min-height: 200px;
   width: 200px;
   border: 1px solid white;
   border-radius: 5px;
