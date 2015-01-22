@@ -1,0 +1,16 @@
+<%= link_to "Back to Admin Panel", admin_index_path %>
+<center>
+  <h1>Edit Comment for <%= @ticker.name %></h1>
+  <br />
+  Poster: <%= User.find(@comment.user_id).email %>
+  <br />
+  Created on: <%= (@comment.created_at.to_s)[0..10] %> at <%= (@comment.created_at.to_s)[11..15] %>
+  <%= form_for [@ticker, @comment], method: :patch do |f| %>
+  <p>
+    Comment
+    <br />
+    <%= f.text_area :description, size: "50x8" %>
+  </p>
+  <%= f.submit "Submit" %>
+  <% end %>
+</center>

@@ -1,0 +1,23 @@
+<%= link_to "Back to Admin Panel", admin_index_path %>
+<center>
+  <h1>Submit New Page</h1>
+<%= form_for [@page] do |f| %>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title, size: "50" %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description, size: "50x8" %>
+  </p>
+  <p>
+    <%= f.label :advantages %><br />
+    <%= f.text_area :advantages, size: "50x6" %>
+  </p>
+  <p>
+    <%= f.label :warnings %><br />
+    <%= f.text_area :warnings, size: "50x6" %>
+  </p>
+    <%= f.submit "Submit" %>
+<% end %>
+</center

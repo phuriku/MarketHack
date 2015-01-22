@@ -1,0 +1,133 @@
+<%= link_to "Back to Home Page", root_path %>
+
+<center>
+  <h1>
+    <%= @page.title %>
+    <% if current_user.admin %>
+      [<%= link_to "Edit", edit_admin_page_path(@page) %>]
+    <% end %>
+  </h1>
+</center>
+
+<% if @tickers %>
+<center>
+  <h3>Top 10 <%= @page.title %> <% if @page.title == "Small Cap Stocks" %>(by movement)<% end %></h3>
+  <table>
+    <col width="120">
+    <col width="60">
+    <col width="60">
+    <col width="120">
+    <col width="100">
+    <col width="60">
+    <col width="60">
+    <col width="60">
+    <col width="60">
+    <col width="60">
+    <col width="120">
+    <tr>
+      <th>Ticker</th>
+      <th colspan="2">Price</th>
+      <th>Volume</th>
+      <th>Market Cap</th>
+      <th colspan="2">50-Day M.A.</th>
+      <th>P/E</th>
+      <th>P/B</th>
+      <th>Beta</th>
+      <th>52W Range</th>
+    </tr>
+    <% @tickers.each do |ticker| %>
+      <tr>
+        <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
+        <td class="right"><%= ticker.price %></td>
+        <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
+        <td class="center"><%= ticker.volume %>M <font size="1px">(avg. <%= ticker.volume_avg %>M)</font></td>
+        <td class="center"><%= ticker.market_cap %></td>
+        <td class="right"><%= ticker.mov_avg_50 %></td>
+        <td><span class="<% if ticker.mov_avg_50_cmp >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.mov_avg_50_cmp %>%)</span></td>
+        <td class="center"><% if ticker.pe %><%= ticker.pe %><% else %>--<% end %></td>
+        <td class="center"><%= ticker.peb %></td>
+        <td class="center"><%= ticker.beta %></td>
+        <td class="center">(<%= ticker.low_52 %> - <%= ticker.high_52 %>)</td>
+      </tr>
+    <% end %>
+  </table>
+</center>
+<% end %>
+
+<br />
+
+<% if @tickers_alt %>
+<center>
+  <h3 id="bottom">Bottom 10 <%= @page.title %></h3>
+  <table>
+    <col width="120">
+    <col width="60">
+    <col width="60">
+    <col width="120">
+    <col width="100">
+    <col width="60">
+    <col width="60">
+    <col width="60">
+    <col width="60">
+    <col width="60">
+    <col width="120">
+    <tr>
+      <th>Ticker</th>
+      <th colspan="2">Price</th>
+      <th>Volume</th>
+      <th>Market Cap</th>
+      <th colspan="2">50-Day M.A.</th>
+      <th>P/E</th>
+      <th>P/B</th>
+      <th>Beta</th>
+      <th>52W Range</th>
+    </tr>
+    <% @tickers_alt.each do |ticker| %>
+    <tr>
+      <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
+      <td class="right"><%= ticker.price %></td>
+      <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
+      <td class="center"><%= ticker.volume %>M <font size="1px">(avg. <%= ticker.volume_avg %>M)</font></td>
+      <td class="center"><%= ticker.market_cap %></td>
+      <td class="right"><%= ticker.mov_avg_50 %></td>
+      <td><span class="<% if ticker.mov_avg_50_cmp >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.mov_avg_50_cmp %>%)</span></td>
+      <td class="center"><% if ticker.pe %><%= ticker.pe %><% else %>--<% end %></td>
+      <td class="center"><%= ticker.peb %></td>
+      <td class="center"><%= ticker.beta %></td>
+      <td class="center">(<%= ticker.low_52 %> - <%= ticker.high_52 %>)</td>
+    </tr>
+    <% end %>
+  </table></center>
+  <% end %>
+<br />
+  <center>
+  <% if @page.description %>
+  <div class="pages-box" style="background-color: #1C1C1C">
+    <center>
+      <h2><%= @page.title %></h2>
+    </center>
+    <hr />
+    <%= simple_format(@page.description) %>
+  </div>
+  <% end %>
+
+  <% if @page.advantages and @page.advantages != ""%>
+  <div class="pages-box" style="background-color: #070719">
+    <center>
+      <h2>Advantages</h2>
+    </center>
+    <hr />
+    <%= simple_format(@page.advantages) %>
+  </div>
+  <% end %>
+
+  <% if @page.warnings and @page.warnings != "" %>
+  <div class="pages-box" style="background-color: #190707">
+    <center>
+      <h2>Warnings</h2>
+    </center>
+    <hr />
+    <%= simple_format(@page.warnings) %>
+  </div>
+  <% end %>
+</center>

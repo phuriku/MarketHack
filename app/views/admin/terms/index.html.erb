@@ -1,0 +1,17 @@
+<%= link_to "Back to Admin Panel", admin_index_path %>
+<center>
+  <h1>Terms Admin Panel</h1>
+  <p><h2><%= link_to "Submit New Term", new_admin_term_path %></h2></p>
+  <table>
+    <col width="250">
+    <col width="50">
+    <col width="50">
+    <% @terms.each do |term| %>
+    <tr>
+      <td><%= link_to term.name, term_path(term) %></td>
+      <td><%= link_to "Edit", edit_admin_term_path(term) %></td>
+      <td><%= link_to "Delete", admin_term_path(term), method: :delete %></td>
+    </tr>
+    <% end %>
+  </table>
+</center>

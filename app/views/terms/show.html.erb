@@ -1,0 +1,33 @@
+<%= link_to "Back to Home Page", root_path %>
+
+<center>
+  <h1>
+    <%= @term.name %>
+    <% if current_user.admin %>
+      [<%= link_to "Edit", edit_admin_term_path(@term) %>]
+    <% end %>
+  </h1>
+
+  <div id="similar-terms">
+    <h3>Similar Terms</h3>
+    <% Term.all.shuffle[0..4].each do |term| %>
+      <p><%= link_to term.name, term_path(term) %></p>
+    <% end %>
+  </div>
+
+  <div id="terms-description" style="background-color: #1C1C1C">
+    <center>
+      <h2>Definition</h2>
+    </center>
+    <hr />
+    <%= simple_format(@term.definition) %>
+  </div>
+
+  <div id="terms-description" style="background-color: #0A0A2A">
+    <center>
+      <h2>Example</h2>
+    </center>
+    <hr />
+    <%= simple_format(@term.example) %>
+  </div>
+</center>

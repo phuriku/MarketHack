@@ -1,0 +1,19 @@
+<%= link_to "Back to Admin Panel", admin_index_path %>
+<center>
+  <h1>Edit <%= @term.name %></h1>
+  <%= form_for [@term], method: :patch do |f| %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, size: "50" %>
+  </p>
+  <p>
+    <%= f.label :definition %><br />
+    <%= f.text_area :definition, size: "50x8" %>
+  </p>
+  <p>
+    <%= f.label :example %><br />
+    <%= f.text_area :example, size: "50x6" %>
+  </p>
+  <%= f.submit "Submit" %>
+  <% end %>
+</center>

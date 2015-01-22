@@ -1,0 +1,22 @@
+<%= link_to "Back to Admin Panel", admin_index_path %>
+<center>
+  <h1>Users Admin Panel</h1>
+  <table>
+    <col width="200">
+    <col width="50">
+    <col width="50">
+    <% @users.each do |user| %>
+    <tr>
+      <td>
+        <%= link_to user.email, admin_user_path(user) %>
+      </td>
+      <td>
+        <%= link_to "Edit", admin_user_path(user) %>
+      </td>
+      <td>
+        <%= link_to "Delete", admin_user_path(user), method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+</center>

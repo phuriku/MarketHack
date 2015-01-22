@@ -1,0 +1,22 @@
+<%= link_to "Back to Admin Panel", admin_index_path %>
+<center>
+  <h1>Tickers Admin Panel</h1>
+  <table>
+    <col width="200">
+    <col width="50">
+    <col width="50">
+    <% @tickers.each do |ticker| %>
+      <tr>
+        <td>
+          <%= link_to ticker.name, ticker_path(ticker) %> (<%= link_to ticker.symbol, ticker_path(ticker) %>)
+        </td>
+        <td>
+          <%= link_to "Edit", edit_admin_ticker_path(ticker) %>
+        </td>
+        <td>
+          <%= link_to "Delete", ticker_path(ticker), method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</center>

@@ -1,0 +1,40 @@
+<%= link_to "Admin Panel", admin_index_path %> >> <%= link_to "Users Panel", admin_users_path %>
+<center>
+<h2><%= @user.email %></h2>
+<table>
+  <col width="200">
+  <col width="150">
+
+<tr>
+  <td>Member Since</td>
+  <td><%= @user.created_at.to_s[0..15] %></td>
+</tr>
+<tr>
+  <td>Most Recent Sign In</td>
+  <td><%= @user.last_sign_in_at.to_s[0..15] %></td>
+</tr>
+<tr>
+  <td>Last Recorded IP</td>
+  <td><%= @user.last_sign_in_ip.to_s %></td>
+</tr>
+<tr>
+  <td>Status</td>
+  <% if @user.admin %>
+    <td>Admin</td>
+  <% else %>
+    <td>Member</td>
+  <% end %>
+</tr>
+</table><br />
+<% if !@user.admin %>
+  <%= form_for [:admin, @user], method: :patch do |f| %>
+    <%= f.hidden_field :admin, value: true %>
+    <%= f.submit "Make Admin" %>
+  <% end %>
+<% elsif @user.admin and current_user.email != @user.email %>
+  <%= form_for [:admin, @user], method: :patch do |f| %>
+    <%= f.hidden_field :admin, value: false %>
+    <%= f.submit "Revoke Admin Privileges" %>
+    <% end %>
+<% end %>
+</center><br />

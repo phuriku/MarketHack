@@ -1,0 +1,15 @@
+<%= link_to "Back to Admin Panel", admin_index_path %>
+<center>
+  <h1>Edit <%= @ticker.name %></h1>
+  <%= form_for [@ticker], method: :patch do |f| %>
+  <p>
+    <%= f.label :symbol %><br />
+    <%= f.text_field :symbol, size: "50" %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, size: "50" %>
+  </p>
+  <%= f.submit "Submit" %>
+  <% end %>
+  </center
