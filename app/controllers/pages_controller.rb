@@ -1,7 +1,4 @@
 class PagesController < ApplicationController
-  def index
-    @pages = Page.order(title: :asc)
-  end
 
   def show
     @page = Page.find(params[:id])
@@ -29,18 +26,17 @@ class PagesController < ApplicationController
     end
   end
 
-  def update
-    @page = Page.find(params[:id])
-    if @page.update(page_params)
-      redirect_to admin_pages_path
-    end
-  end
-
   def create
     @page = Page.new(page_params)
     if @page.save
-      redirect_to admin_pages_path
-      flash[:notice] = "Page successfully added."
+      redirect_to page_path(@path), notice: "Page successfully added."
+    end
+  end
+
+  def update
+    @page = Page.find(params[:id])
+    if @page.update(page_params)
+      redirect_to page_path(@path), notice: "Page successfully edited."
     end
   end
 

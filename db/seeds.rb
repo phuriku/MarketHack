@@ -129,6 +129,12 @@ tickers = [
     beta: 1.09
   },
   {
+    symbol: 'NFLX',
+    name: 'Netflix',
+    sector: 'Tech',
+    beta: 1.04
+  },
+  {
     symbol: 'SN',
     name: 'Sanchez Energy',
     sector: 'Energy',

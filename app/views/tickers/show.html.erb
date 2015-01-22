@@ -6,82 +6,160 @@
 
 <%= link_to 'Back to Home Page', root_path %>
 
-<center><h1><%= @ticker.symbol %> (<%= @ticker.name %>)</h1></center>
+<center><h1>
+  <%= @ticker.symbol %> (<%= @ticker.name %>)
+</h1></center>
 
-<div style="width: 500px; height: auto; border: 2px solid white; margin: 50px 10px; padding: 10px; display: inline-block; float: left; background-color: #1C1C1C">
-  <center>Price: $<span style="font-size: 40pt"><%= @ticker.price %> <span style="font-size: 20pt" class=<% if @ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= @ticker.daily_change %>%)</span></span></center>
+<div id="ticker-stats">
+  <center>
+    Price: $<span class="pt40"><%= @ticker.price %></span>
+    <span class="pt20 daily_change"> (<%= @ticker.daily_change %>%)</span>
+  </center>
+      <% if @ticker.daily_change >= 0 %>
+        <script>$(".daily_change").addClass("green");</script>
+      <% else %>
+        <script>$(".daily_change").addClass("red");</script>
+      <% end %>
   <hr />
-  <center>Market Cap: $<span style="font-size: 30pt"><%= @ticker.market_cap %></span><span style="font-size: 15pt"><% if @ticker.market_cap_num > 50000000000 %> (Large Cap) <% elsif @ticker.market_cap_num > 5000000000 %> (Mid Cap) <% else %> (Small Cap) <% end %></span>
+  <center><%= link_to "Market Cap", term_path(Term.find_by(name: "Market Cap")) %>: $
+    <% if @ticker.market_cap %>
+      <span style="font-size: 30pt">
+        <%= @ticker.market_cap %>
+      </span>
+      <span style="font-size: 15pt">
+        <% if @ticker.market_cap_num > 50000000000 %> (Large Cap)
+        <% elsif @ticker.market_cap_num > 5000000000 %> (Mid Cap)
+        <% else %> (Small Cap)
+        <% end %>
+      </span>
+    <% end %>
   <hr />
-  <center><%= link_to "P/E", term_path(Term.find_by(name: "P/E")) %>: <span style="font-size: 30pt"><%= @ticker.pe %><% if @ticker.pe.nil? %>--<% end %></span></center>
-    <span class=<% if @ticker.pe.nil? %> <%= "red" %> <% elsif @ticker.pe <= 12 %> <%= "green" %> <% elsif @ticker.pe != nil and @ticker.pe >= 50 %> <%= "red" %> <% else %> <%= "" %> <% end %>>
-      <% if @ticker.pe.nil? %> (This company is not profitable. Investment requires confidence that this company can get out of the red.)
-      <% elsif @ticker.pe <= 12 and @ticker.sector != 'Finance' or @ticker.pe <= 10 %> (This stock has a low P/E, meaning that the market expects little future growth for this company. For stable, well-run companies capable of sustained future growth, a low P/E may imply undervaluation.)
-      <% elsif @ticker.pe >= 30 %> (A high P/E means the market expects rapid profit expansion. If the company doesn't meet these expectations, shares could fall sharply. )<% end %>
+  <center>
+    <%= link_to "P/E", term_path(Term.find_by(name: "P/E")) %>:
+    <span class="pt30">
+      <% if @ticker.pe %> <%= @ticker.pe %>
+      <% else %> --
+      <% end %>
+    </span>
+  </center>
+    <span id="pe_comment">
+      <% if @ticker.pe.nil? %>
+        (This company is not profitable. Investment requires confidence that this company can get out of the red.)
+        <script>$("#pe_comment").addClass("red");</script>
+      <% elsif @ticker.pe <= 12 and @ticker.sector != 'Finance' or @ticker.pe <= 10 %>
+        (This stock has a low P/E, meaning that the market expects little growth for this company. For stable, well-run companies capable of sustained future growth, a low P/E may imply undervaluation.)
+        <script>$("#pe_comment").addClass("green");</script>
+      <% elsif @ticker.pe >= 30 %>
+        (A high P/E means the market expects rapid profit expansion. If the company doesn't meet these expectations, shares could fall sharply. )
+        <script>$("#pe_comment").addClass("red");</script>
+      <% end %>
     </span>
   <hr />
-  <center><%= link_to "P/B", term_path(Term.find_by(name: "P/B")) %>: <span style="font-size: 30pt"><%= @ticker.peb %></span></center>
-    <span class=<% if @ticker.peb <= 1 %> <%= "green" %> <% elsif @ticker.peb >= 10 %> <%= "red" %> <% else %> <%= "" %> <% end %>>
-      <% if @ticker.peb <= 1 and @ticker.sector != 'Finance' or @ticker.peb <= 0.8 %> (This stock is selling below book value, meaning that its cash and physical assets (minus debt) are worth more than the stock.) <% end %>
+  <center>
+    <%= link_to "P/B", term_path(Term.find_by(name: "P/B")) %>: <span style="font-size: 30pt"><%= @ticker.peb %></span>
+  </center>
+    <span class="pb_comment">
+      <% if @ticker.peb <= 1 and @ticker.sector != 'Finance' or @ticker.peb <= 0.8 %>
+        (This stock is selling below book value, meaning that its cash and physical assets (minus debt) are worth more than the stock.)
+        <script>$(".pb_comment").addClass("green");</script>
+      <% end %>
     </span>
   <hr />
-  <center>50-Day Moving Average: <span style="font-size: 30pt"><%= @ticker.mov_avg_50 %></span><span style="font-size:20pt" class=<% if @ticker.mov_avg_50_cmp >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>> (<%= @ticker.mov_avg_50_cmp %>%)</span></center>
-    <span class=<% if @ticker.mov_avg_50_cmp >= 5 %> <%= "green" %> <% elsif @ticker.mov_avg_50_cmp <= -5 %> <%= "red" %> <% else %> <%= "" %> <% end %>>
-      <% if @ticker.mov_avg_50_cmp >= 5 %> (This stock has been moving upward lately, and may be a good candidate for a momentum play.)
-      <% elsif @ticker.mov_avg_50_cmp <= -5 %> (This stock has been moving down lately. Take caution.) <% end %>
+  <center>
+    <%= link_to "50-Day Moving Average", term_path(Term.find_by(name: "50-Day Moving Average")) %>: <span class="pt30"><%= @ticker.mov_avg_50 %></span>
+    <span class="pt20 ma50_cmp"> (<%= @ticker.mov_avg_50_cmp %>%) </span>
+      <% if @ticker.mov_avg_50_cmp >= 0 %>
+        <script>$(".ma50_cmp").addClass("green");</script>
+      <% else %>
+        <script>$(".ma50_cmp").addClass("red");</script>
+      <% end %>
+  </center>
+    <span class="ma50_comment">
+      <% if @ticker.mov_avg_50_cmp >= 5 %>
+        (This stock has been moving upward lately, and may be a good candidate for a momentum play.)
+        <script>$(".ma50_comment").addClass("green");</script>
+      <% elsif @ticker.mov_avg_50_cmp <= -5 %>
+        (This stock has been moving down lately. Take caution.)
+        <script>$(".ma50_comment").addClass("red");</script>
+      <% end %>
     </span>
   <hr />
-  <center>52 Week Range: <span style="font-size: 30pt"><%= @ticker.low_52 %> - <%= @ticker.high_52 %></span></center>
+  <center>
+    52 Week Range:
+    <span class="pt30"><%= @ticker.low_52 %> - <%= @ticker.high_52 %></span>
+  </center>
     <% if @ticker.daily_annual_change_avg > 500 %>(This stock is very high volatility. Approach with caution.)<% end %>
 </div>
 
-<div id="container" style="height: 350px; width: 600px; display: inline-block; float: left; margin: 100px 50px; padding: 20px 0; border: 1px solid white"></div>
+<div id="container"></div>
 
-<script>
-$(document).ready(function () {
+<% if !Rails.env.test? %>
+  <%= content_for :extra_footer do %>
+    <script>
+    $(document).ready(function () {
 
-  $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+      $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
 
-    $('#container').highcharts('StockChart', {
+        $('#container').highcharts('StockChart', {
 
+          rangeSelector : {
+            selected : 1
+          },
 
-      rangeSelector : {
-        selected : 1
-      },
+          title : {
+            text : 'Stock Price'
+          },
 
-      title : {
-        text : 'Stock Price'
-      },
+          series : [{
+            name : 'Price',
+            data : data,
+            tooltip: {
+              valueDecimals: 2
+            }
+          }]
+        });
+      });
 
-      series : [{
-        name : 'Price',
-        data : data,
-        tooltip: {
-          valueDecimals: 2
-        }
-      }]
+      if(document.URL.indexOf("#")==-1){
+        url = document.URL+"#";
+        location = "#";
+        location.reload(true);
+      }
+
     });
-  });
+    </script>
+  <% end %>
+<% end %>
 
-});
-</script>
+<div id="comments-div">
 
-<div style="clear: both; width:60%; background-color: #424242; border-radius: 5px; margin: 20px 0; padding: 20px 20px; margin-left: auto; margin-right:auto;">
-
-  <center><h1>Comments (<%= Comment.where(ticker_id: @ticker.id).count %>)</h1></center><br />
-
+  <center><h1>
+    Comments (<%= Comment.where(ticker_id: @ticker.id).count %>)
+  </h1></center>
+  <br />
   <% if @comments %>
     <%= paginate @comments %>
     <% @comments.each do |comment| %>
       <center>
-        <div class="comment" style="background-color: #2E2E2E; border: 1px solid white; text-align: left; min-height: 40px; width: 400px; border-radius: 5px; margin: 20px 20px 20px 15px">
-          <div style="min-height: 20px; width: 100%; padding: 20px 20px 10px 5px">
+        <div id="comment-outer">
+          <div id="comment-description">
             <%= comment.description %><br />
           </div>
           <hr />
-          <div style="text-align: right; padding: 10px 20px 20px 20px">
-            <% if current_user == User.find(comment.user_id) %><span style="font-size: 15px"> Edit | Delete | </span><% end %> <span style="font-size: 10px">Submitted by:</span> <%= User.find(comment.user_id).email %><br />
-            <span style="font-size: 10px">Created on:</span> <%= (comment.created_at.to_s)[0..10] %> <span style="font-size: 10px">at</span> <%= (comment.created_at.to_s)[11..15] %> <span style="font-size: 10px">with Stock Price at</span> <%= comment.stock_price %> <span class=<% if comment.stock_price/@ticker.price >= 1 %> "green" <% else %> "red" <% end %> >(<%= ((1-comment.stock_price/@ticker.price)*100).round %>%)</span>
+          <div id="comment-info">
+            <% if current_user == User.find(comment.user_id) or current_user.admin %>
+              <span class="pt10"><%= link_to "Edit", edit_ticker_comment_path(@ticker, comment) %> | <%= link_to "Delete", ticker_comment_path(@ticker, comment), method: :delete %> | </span>
+            <% end %>
+            <span class="pt7">Submitted by:</span> <%= User.find(comment.user_id).email %><br />
+            <span class="pt7">Created on:</span> <%= (comment.created_at.to_s)[0..10] %>
+            <span class="pt7">at</span> <%= (comment.created_at.to_s)[11..15] %>
+            <span class="pt7">with Stock Price at</span> <%= comment.stock_price %>
+            <span class="comment_cmp">(<%= ((1-comment.stock_price/@ticker.price)*100).round %>%)</span>
+            <% if comment.stock_price/@ticker.price >= 1 %>
+              <script>$(".comment_cmp").addClass("green");</script>
+            <% else %>
+              <script>$(".comment_cmp").addClass("red");</script>
+            <% end %>
           </div>
         </div>
       </center>
@@ -90,23 +168,23 @@ $(document).ready(function () {
 
   <div style="margin: 50px 20px">
     <% if @comment != nil and @comment.errors.any? %>
-    <h3 style="color: red"><%= pluralize(@comment.errors.count, "error") %> prohibited this question from being saved.<br />
-      Please enter a comment under 200 characters long.</h3>
-      <% end %>
-    </div>
-
-    <center><h3><%= "Add a comment about #{@ticker.name}"  %></h3></center>
-
-    <%= form_for [@ticker, @comment] do |f| %>
-
-    <center><div class="description">
-      <%= f.text_area :description, size: "50x10" %><br />
-    </div>
-    Please keep your comment to under 500 characters.<br /><br />
-    <div class="rating">
-      <%= f.submit  "Submit"%>
-    </div></center>
-
+      <h3 class="red"><%= pluralize(@comment.errors.count, "error") %> prohibited this question from being saved.<br />
+      Please enter a comment under 500 characters long.</h3>
     <% end %>
+  </div>
+
+  <center><h3><%= "Add a comment about #{@ticker.name}"  %></h3></center>
+  <%= form_for [@ticker, @comment] do |f| %>
+    <center>
+      <div class="description">
+        <%= f.text_area :description, size: "50x10" %>
+      <br />
+      </div>
+      Please keep your comment to under 500 characters.<br /><br />
+      <div class="rating">
+        <%= f.submit  "Submit"%>
+      </div>
+    </center>
+  <% end %>
 
 </div>

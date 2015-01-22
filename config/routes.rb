@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :tickers do
       resources :comments, only: [:index, :show, :destroy]
     end
-    resources :users, only: [:index, :show, :destroy]
+    resources :users, only: [:index, :edit, :update, :show, :destroy]
     resources :pages
     resources :terms
   end

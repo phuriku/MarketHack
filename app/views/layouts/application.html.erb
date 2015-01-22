@@ -6,13 +6,13 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <center>
-    <span style="font-size: 50pt; text-shadow: 2px 2px grey">MarketHack</span>
-    <Br /><span style="font-size: 10pt; color: red">Learn the Market. Hack the Market.</span>
+    <div style="font-size: 50pt; text-shadow: 2px 2px grey; display: block-inline; margin: 0">MarketHack</div>
+    <div style="font-size: 10pt; color: red; margin: 0">Learn the Market. Hack the Market.</div>
   </center>
 </head>
 <body>
 
-<div align="right" class="navbar-text pull-right">
+<div align="right" class="navbar-text pull-right; display: block-inline; float: right; width: 300px" >
 <% if user_signed_in? %>
   Logged in as <b><%= current_user.email %></b>.<br />
   <% if current_user.admin %><%= link_to 'Admin Panel', admin_index_path %> | <% end %>
@@ -25,16 +25,18 @@
 </div><br />
 
 <% if notice %>
-  <p class="alert alert-success"><%= notice %></p>
+  <div style="background-color: #3B0B0B; margin: 5px; font-weight: bold; font-size: 14pt; text-align: center; border: 1px solid #610B21">
+    <p class="alert alert-success"><%= notice %></p>
+  </div>
 <% end %>
 <% if alert %>
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
 <%= yield %>
-
 </body>
 <footer>
   <hr color="white" />
   <center><span style="font-size: 10pt">© 2015 MarketHack</span></center>
+  <%= yield :extra_footer %>
 </footer>
 </html>

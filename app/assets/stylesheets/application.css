@@ -1,15 +1,179 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+body {
+  background-color: black;
+  color: white;
+  font-family: Avenir;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #D8D8D8;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.green {
+  color: #40FF00;
+}
+
+.red {
+  color: red;
+}
+
+.pt7 {
+  font-size: 7pt;
+}
+
+.pt15 {
+  font-size: 15pt;
+}
+
+.pt20 {
+  font-size: 20pt;
+}
+
+.pt30 {
+  font-size: 30pt;
+}
+
+.pt40 {
+  font-size: 40pt;
+}
+
+/* Ticker CSS */
+
+.display_table {
+  height: 200px;
+  width: 30%;
+  background-color: #1C1C1C;
+  font-size: 12pt;
+  padding: 10px;
+  margin: 10px;
+  float: left;
+  display: inline-block;
+  border: 1px solid white;
+
+}
+
+.table-head {
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  font-size: 15pt;
+  margin: 10px 0px;
+  font-weight: bold;
+}
+
+#index-stats {
+  display:inline-block;
+  margin: 10px 0 0 10px;
+  text-align: left;
+  float: left;
+  display: inline-block;
+  width: 300px;
+  height: 55px;
+  border: 1px solid white;
+  padding: 5px;
+}
+
+#ticker-stats {
+  width: 500px;
+  height: auto;
+  border: 2px solid white;
+  margin: 20px 10px;
+  padding: 10px;
+  display: inline-block;
+  float: left;
+  background-color: #1C1C1C;
+}
+
+#container {
+  height: 350px;
+  width: 600px;
+  display: inline-block;
+  float: left;
+  margin: 80px 50px;
+  padding: 20px 0;
+  border: 1px solid white;
+}
+
+/* Pages CSS */
+
+.pages-box {
+  min-height: 200px;
+  width: 550px;
+  border: 1px solid white;
+  margin: 20px;
+  padding: 0 5px 10px 5px;
+  border-radius: 5px;
+  text-align: left;
+}
+
+/* Comments CSS */
+
+#comments-div {
+  clear: both;
+  width:60%;
+  background-color: #424242;
+  border-radius: 5px;
+  margin: 20px 0;
+  padding: 20px 20px;
+  margin-left: auto;
+  margin-right:auto;
+}
+
+#comment-outer {
+  background-color: #2E2E2E;
+  border: 1px solid white;
+  text-align: left;
+  min-height: 40px;
+  width: 400px;
+  border-radius: 5px;
+  margin: 20px 20px 20px 15px;
+}
+
+#comment-description {
+  min-height: 20px;
+  width: 100%;
+  padding: 20px 20px 10px 5px;
+}
+
+#comment-info {
+  text-align: right;
+  padding: 10px 20px 20px 20px;
+}
+
+/* Terms CSS */
+
+#similar-terms {
+  style="min-height: 200px;
+  width: 200px;
+  border: 1px solid white;
+  border-radius: 5px;
+  float: left;
+  display: block-inline;
+  padding: 10px;
+}
+
+#terms-description {
+  min-height: 200px;
+  width: 550px;
+  border: 1px solid white;
+  margin: 20px;
+  padding: 0 5px 10px 5px;
+  border-radius: 5px;
+  text-align: left;
+}

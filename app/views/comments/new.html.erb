@@ -1,20 +1,24 @@
 <div>
   <% if @comment != nil and @comment.errors.any? %>
-    <h3 style="color: red"><%= pluralize(@comment.errors.count, "error") %> prohibited this question from being saved.<br />
-    Please enter a comment under 200 characters long.</h3>
+    <h3 class="red">
+      <%= pluralize(@comment.errors.count, "error") %> prohibited this question from being saved.<br />
+      Please enter a comment under 200 characters long.
+    </h3>
   <% end %>
 </div>
 
-<center><h3><%= "Add a comment for #{@ticker.name}"  %></h3></center>
+<center><h3>
+  <%= "Add a comment for #{@ticker.name}"  %>
+</h3></center>
 
 <%= form_for [@ticker, @comment] do |f| %>
-
-  <center><div class="description">
-    Please keep your comment to under 500 characters.<br /><br />
-    <%= f.text_area :description, size: "50x10" %><br />
-  </div>
-  <div class="rating">
-    <%= f.submit  "Submit"%>
-  </div></center>
-
+  <center>
+    <div class="description">
+      Please keep your comment to under 500 characters.<br /><br />
+      <%= f.text_area :description, size: "50x10" %><br />
+    </div>
+    <div class="rating">
+      <%= f.submit  "Submit"%>
+    </div>
+  </center>
 <% end %>

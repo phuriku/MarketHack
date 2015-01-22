@@ -24,18 +24,30 @@
   </center><br />
 
 <% else %>
-<div style="display:inline-block; margin: 10px 0 0 10px; text-align: left; float: left; display: inline-block; width: 300px; height: 55px; border: 1px solid white; padding: 5px;">
+<div id="index-stats">
   <table style="font-weight: bold">
     <col width="150">
     <col width="200">
     <tr>
-      <td style="text-align: center">NASDAQ</td>
-      <td class=<% if $nasdaq_data[2].split(" - ")[1].to_f >= 0 %> "green" <% else %> "red" <% end %>><%= number_with_delimiter($nasdaq_data[0].to_f.round(1),  :precision => 1, :delimiter => ',') %> (<% if $nasdaq_data[2].split(" - ")[1].to_f >= 0 %>↑<% end %><%= $nasdaq_data[2].split(" - ")[1].to_f.round(1) %>%)</td>
+      <td class="center">NASDAQ</td>
+      <td class="nasdaq"><%= number_with_delimiter(@nasdaq_price,  :precision => 1, :delimiter => ',') %>
+        (<% if @nasdaq_change >= 0 %>↑<% end %><%= @nasdaq_change %>%)</td>
+      <% if @nasdaq_change >= 0 %>
+        <script>$(".nasdaq").addClass("green")</script>
+      <% else %>
+        <script>$(".nasdaq").addClass("red")</script>
+      <% end %>
+    </tr>
     <tr>
-    <tr>
-      <td style="text-align: center">S&P 500</td>
-      <td class=<% if $sp_data[2].split(" - ")[1].to_f >= 0 %> "green" <% else %> "red" <% end %>><%= number_with_delimiter($sp_data[0].to_f.round(1),  :precision => 1, :delimiter => ',') %> (<% if $sp_data[2].split(" - ")[1].to_f >= 0 %>↑<% end %><%= $sp_data[2].split(" - ")[1].to_f.round(1) %>%)</td>
-    <tr>
+      <td class="center">S&P 500</td>
+      <td class="sp"><%= number_with_delimiter(@sp_price,  :precision => 1, :delimiter => ',') %>
+        (<% if @sp_change >= 0 %>↑<% end %><%= @sp_change %>%)</td>
+        <% if @sp_change >= 0 %>
+          <script>$(".sp").addClass("green")</script>
+        <% else %>
+          <script>$(".sp").addClass("red")</script>
+        <% end %>
+    </tr>
   </table>
 </div>
 
@@ -145,7 +157,7 @@
     <col width="50">
     <col width="50">
     <col width="50">
-    <col width="100">
+    <col width="110">
     <tr>
       <th>Ticker</th>
       <th colspan="2">Price</th>
@@ -259,7 +271,7 @@
 </div>
 <br />
 <div class="display_table">
-  <div class="table-head"><%= link_to "Tech (Weak Performers)", page_path(Page.find_by(title: "Tech Stocks")) %></div>
+  <div class="table-head"><%= link_to "Tech (Weak Performers)", page_path(Page.find_by(title: "Tech Stocks"), anchor: "bottom") %></div>
   <table>
     <col width="120">
     <col width="60">
@@ -281,7 +293,7 @@
   </table>
 </div>
 <div class="display_table">
-  <div class="table-head"><%= link_to "Finance (Weak Performers)", page_path(Page.find_by(title: "Finance Stocks")) %></div>
+  <div class="table-head"><%= link_to "Finance (Weak Performers)", page_path(Page.find_by(title: "Finance Stocks"), anchor: "bottom") %></div>
   <table>
     <col width="120">
     <col width="60">
@@ -303,7 +315,7 @@
   </table>
 </div>
 <div class="display_table">
-  <div class="table-head"><%= link_to "Energy (Weak Performers)", page_path(Page.find_by(title: "Energy Stocks")) %></div>
+  <div class="table-head"><%= link_to "Energy (Weak Performers)", page_path(Page.find_by(title: "Energy Stocks"), anchor: "bottom") %></div>
   <table>
     <col width="120">
     <col width="60">
