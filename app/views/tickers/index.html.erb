@@ -1,4 +1,5 @@
 <head>
+  <title>MarketHack</title>
   <script src="jquery-1.11.1.min.js"></script>
 </head>
 
@@ -67,9 +68,9 @@
       <% Ticker.order(volume_cmp: :desc).limit(4).each do |ticker| %>
       <tr>
         <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-        <td style="text-align: right"><%= ticker.price %> </td>
+        <td class="right"><%= ticker.price %> </td>
         <td><span class=<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>>(<%= ticker.daily_change %>%)</span></td>
-        <td style="text-align: center"><%= ticker.volume %>M <font size="1px">(avg. <%= ticker.volume_avg %>M)</font></td>
+        <td class="center"><%= ticker.volume %>M <font size="1px">(avg. <%= ticker.volume_avg %>M)</font></td>
       </tr>
       <% end %>
     </table>
@@ -90,16 +91,16 @@
     <% Ticker.order(daily_change_abs: :desc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %></td>
+      <td class="right"><%= ticker.price %></td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.volume %>M <font size="1px">(avg. <%= ticker.volume_avg %>M)</font></td>
+      <td class="center"><%= ticker.volume %>M <font size="1px">(avg. <%= ticker.volume_avg %>M)</font></td>
     </tr>
     <% end %>
   </table>
 </div>
 
 <div class="display_table">
-  <div class="table-head"><%= link_to "Value Stocks (by P/E and P/B)", page_path(Page.find_by(title: "Value Stocks")) %></div>
+  <div class="table-head"><%= link_to "Value Stocks", page_path(Page.find_by(title: "Value Stocks")) %></div>
   <table>
     <col width="120">
     <col width="60">
@@ -115,10 +116,10 @@
     <% Ticker.order(pe_peb_avg: :asc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %></td>
+      <td class="right"><%= ticker.price %></td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><% if ticker.pe %><%= ticker.pe %><% else %>--<% end %></td>
-      <td style="text-align: center"><%= ticker.peb %></td>
+      <td class="center"><% if ticker.pe %><%= ticker.pe %><% else %>--<% end %></td>
+      <td class="center"><%= ticker.peb %></td>
     </tr>
     <% end %>
   </table>
@@ -141,9 +142,9 @@
     <% Ticker.order(mov_avg_50_cmp: :desc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %></td>
+      <td class="right"><%= ticker.price %></td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: right"><%= ticker.mov_avg_50 %></td>
+      <td class="right"><%= ticker.mov_avg_50 %></td>
       <td><span class="<% if ticker.mov_avg_50_cmp >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.mov_avg_50_cmp %>%)</span></td>
     </tr>
     <% end %>
@@ -167,9 +168,9 @@
     <% Ticker.where("daily_change_abs > ?", 1).order(daily_annual_change_avg: :desc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %> </td>
+      <td class="right"><%= ticker.price %> </td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.beta %></td>
+      <td class="center"><%= ticker.beta %></td>
       <td>(<%= ticker.low_52 %> - <%= ticker.high_52 %>)</td>
     </tr>
     <% end %>
@@ -193,10 +194,10 @@
     <% Ticker.where("market_cap_num < ?", 5000000000).order(daily_change_abs: :desc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %></td>
+      <td class="right"><%= ticker.price %></td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.market_cap %></td>
-      <td style="text-align: center"><% if ticker.pe %><%= ticker.pe %><% else %>--<% end %></td>
+      <td class="center"><%= ticker.market_cap %></td>
+      <td class="center"><% if ticker.pe %><%= ticker.pe %><% else %>--<% end %></td>
     </tr>
     <% end %>
   </table>
@@ -218,9 +219,9 @@
     <% Ticker.where("sector = ?", "Tech").order(daily_change: :desc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %> </td>
+      <td class="right"><%= ticker.price %> </td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.market_cap %></td>
+      <td class="center"><%= ticker.market_cap %></td>
     </tr>
     <% end %>
   </table>
@@ -240,9 +241,9 @@
     <% Ticker.where("sector = ?", "Finance").order(daily_change: :desc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %> </td>
+      <td class="right"><%= ticker.price %> </td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.market_cap %></td>
+      <td class="center"><%= ticker.market_cap %></td>
     </tr>
     <% end %>
   </table>
@@ -262,9 +263,9 @@
     <% Ticker.where("sector = ?", "Energy").order(daily_change: :desc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %> </td>
+      <td class="right"><%= ticker.price %> </td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.market_cap %></td>
+      <td class="center"><%= ticker.market_cap %></td>
     </tr>
     <% end %>
   </table>
@@ -285,9 +286,9 @@
     <% Ticker.where("sector = ?", "Tech").order(daily_change: :asc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %> </td>
+      <td class="right"><%= ticker.price %> </td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.market_cap %></td>
+      <td class="center"><%= ticker.market_cap %></td>
     </tr>
     <% end %>
   </table>
@@ -307,9 +308,9 @@
     <% Ticker.where("sector = ?", "Finance").order(daily_change: :asc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %> </td>
+      <td class="right"><%= ticker.price %> </td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.market_cap %></td>
+      <td class="center"><%= ticker.market_cap %></td>
     </tr>
     <% end %>
   </table>
@@ -329,9 +330,9 @@
     <% Ticker.where("sector = ?", "Energy").order(daily_change: :asc).limit(4).each do |ticker| %>
     <tr>
       <td><%= link_to ticker.symbol, ticker_path(ticker) %> <font size="1px">(<%= ticker.name %>)</font></td>
-      <td style="text-align: right"><%= ticker.price %> </td>
+      <td class="right"><%= ticker.price %> </td>
       <td><span class="<% if ticker.daily_change >= 0 %> <%= "green" %> <% else %> <%= "red" %> <% end %>">(<%= ticker.daily_change %>%)</span></td>
-      <td style="text-align: center"><%= ticker.market_cap %></td>
+      <td class="center"><%= ticker.market_cap %></td>
     </tr>
     <% end %>
   </table>

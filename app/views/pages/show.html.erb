@@ -1,3 +1,7 @@
+<head>
+  <title>MarketHack - <%= @page.title %> Page</title>
+</head>
+
 <%= link_to "Back to Home Page", root_path %>
 
 <center>
@@ -27,11 +31,11 @@
     <tr>
       <th>Ticker</th>
       <th colspan="2">Price</th>
-      <th>Volume</th>
-      <th>Market Cap</th>
-      <th colspan="2">50-Day M.A.</th>
-      <th>P/E</th>
-      <th>P/B</th>
+      <th><%= link_to "Volume", term_path(Term.find_by(name: "Volume"))%></th>
+      <th><%= link_to "Market Cap", term_path(Term.find_by(name: "Market Cap")) %></th>
+      <th colspan="2"><%= link_to "50-Day M.A.", term_path(Term.find_by(name: "50-Day Moving Average")) %></th>
+      <th><%= link_to "P/E", term_path(Term.find_by(name: "P/E")) %></th>
+      <th><%= link_to "P/B", term_path(Term.find_by(name: "P/B")) %></th>
       <th>Beta</th>
       <th>52W Range</th>
     </tr>
@@ -74,11 +78,11 @@
     <tr>
       <th>Ticker</th>
       <th colspan="2">Price</th>
-      <th>Volume</th>
-      <th>Market Cap</th>
-      <th colspan="2">50-Day M.A.</th>
-      <th>P/E</th>
-      <th>P/B</th>
+      <th><%= link_to "Volume", term_path(Term.find_by(name: "Volume"))%></th>
+      <th><%= link_to "Market Cap", term_path(Term.find_by(name: "Market Cap")) %></th>
+      <th colspan="2"><%= link_to "50-Day M.A.", term_path(Term.find_by(name: "50-Day Moving Average")) %></th>
+      <th><%= link_to "P/E", term_path(Term.find_by(name: "P/E")) %></th>
+      <th><%= link_to "P/B", term_path(Term.find_by(name: "P/B")) %></th>
       <th>Beta</th>
       <th>52W Range</th>
     </tr>
@@ -101,7 +105,7 @@
   <% end %>
 <br />
   <center>
-  <% if @page.description %>
+  <% if @page.description and @page.description != "" %>
   <div class="pages-box" style="background-color: #1C1C1C">
     <center>
       <h2><%= @page.title %></h2>
